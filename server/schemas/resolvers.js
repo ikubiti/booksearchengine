@@ -46,7 +46,6 @@ const resolvers = {
 		},
 		login: async (parent, { email, username, password }) => {
 			const credentials = username ? ({ username: username }) : ({ email: email });
-			console.log(credentials);
 			const user = await User.findOne(credentials);
 
 			if (!user) {
