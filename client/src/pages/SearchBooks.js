@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 import { ADD_BOOK } from '../utils/mutations';
 import {
