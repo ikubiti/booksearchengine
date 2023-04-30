@@ -8,7 +8,8 @@ const resolvers = {
 			return await User.find({});
 		},
 		user: async (parent, args, context) => {
-			return await User.findOne({ $or: [{ _id: context.user ? context.user._id : args.id }, { username: args.username }] });
+			const aUser = await User.findOne(args);
+			return aUser;
 		}
 
 	},
@@ -29,10 +30,10 @@ const resolvers = {
 				{ new: true, runValidators: true }
 			);
 		},
-		deleteBook: async (parent, args, context) => {
+		deleteBook: async (parent, { userId, bookId }) => {
 			return await User.findOneAndUpdate(
-				{ _id: context.user._id },
-				{ $pull: { savedBooks: args } },
+				{ _id: userId },
+				{ $pull: { savedBooks: { bookId: bookId } } },
 				{ new: true }
 			);
 		},
