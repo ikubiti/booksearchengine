@@ -22,27 +22,19 @@ const resolvers = {
 
 			return { token, user };
 		},
-		saveBook: async (parent, args, context) => {
-			if (context.user) {
-				return await User.findOneAndUpdate(
-					{ _id: context.user._id },
-					{ $addToSet: { savedBooks: args } },
-					{ new: true, runValidators: true }
-				);
-			}
-
-			throw new AuthenticationError('Not logged in');
+		saveBook: async (parent, args) => {
+			return await User.findOneAndUpdate(
+				{ _id: args.userId },
+				{ $addToSet: { savedBooks: args } },
+				{ new: true, runValidators: true }
+			);
 		},
 		deleteBook: async (parent, args, context) => {
-			if (context.user) {
-				return await User.findOneAndUpdate(
-					{ _id: context.user._id },
-					{ $pull: { savedBooks: args } },
-					{ new: true }
-				);
-			}
-
-			throw new AuthenticationError('Not logged in');
+			return await User.findOneAndUpdate(
+				{ _id: context.user._id },
+				{ $pull: { savedBooks: args } },
+				{ new: true }
+			);
 		},
 		login: async (parent, { email, username, password }) => {
 			const credentials = username ? ({ username: username }) : ({ email: email });
@@ -59,7 +51,6 @@ const resolvers = {
 			}
 
 			const token = signToken(user);
-
 			return { token, user };
 		}
 	}
