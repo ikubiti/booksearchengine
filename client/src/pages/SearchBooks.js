@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import { useQuery } from '@apollo/client';
+import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_BOOK } from '../utils/mutations';
 import {
@@ -48,12 +48,15 @@ const SearchBooks = () => {
 
       const { items } = await response.json();
 
+      console.log(items);
+
       const bookData = items.map((book) => ({
         bookId: book.id,
         authors: book.volumeInfo.authors || ['No author to display'],
         title: book.volumeInfo.title,
         description: book.volumeInfo.description,
         image: book.volumeInfo.imageLinks?.thumbnail || '',
+        link: book.volumeInfo.infoLink || ''
       }));
 
       setSearchedBooks(bookData);
@@ -134,6 +137,7 @@ const SearchBooks = () => {
                   <Card.Body>
                     <Card.Title>{book.title}</Card.Title>
                     <p className='small'>Authors: {book.authors}</p>
+                    {book.link && <Link to={book.link} target="_blank"> Get more at Google Books</Link>}
                     <Card.Text>{book.description}</Card.Text>
                     {Auth.loggedIn() && (
                       <Button
