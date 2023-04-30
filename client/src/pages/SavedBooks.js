@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
 import { DELETE_BOOK } from '../utils/mutations';
@@ -69,6 +69,7 @@ const SavedBooks = () => {
                   <Card.Body>
                     <Card.Title>{book.title}</Card.Title>
                     <p className='small'>Authors: {book.authors}</p>
+                    {book.link && <Link to={book.link} target="_blank"> Buy book at Google Books</Link>}
                     <Card.Text>{book.description}</Card.Text>
                     <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book.bookId)}>
                       Delete this Book!
