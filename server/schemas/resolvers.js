@@ -8,7 +8,8 @@ const resolvers = {
 			return await User.find({});
 		},
 		user: async (parent, args, context) => {
-			return await User.findOne({ $or: [{ _id: context.user ? context.user._id : args.id }, { username: args.username }] });
+			const aUser = await User.findOne(args);
+			return aUser;
 		}
 
 	},
@@ -22,31 +23,22 @@ const resolvers = {
 
 			return { token, user };
 		},
-		saveBook: async (parent, args, context) => {
-			if (context.user) {
-				return await User.findOneAndUpdate(
-					{ _id: context.user._id },
-					{ $addToSet: { savedBooks: args } },
-					{ new: true, runValidators: true }
-				);
-			}
-
-			throw new AuthenticationError('Not logged in');
+		saveBook: async (parent, args) => {
+			return await User.findOneAndUpdate(
+				{ _id: args.userId },
+				{ $addToSet: { savedBooks: args } },
+				{ new: true, runValidators: true }
+			);
 		},
-		deleteBook: async (parent, args, context) => {
-			if (context.user) {
-				return await User.findOneAndUpdate(
-					{ _id: context.user._id },
-					{ $pull: { savedBooks: args } },
-					{ new: true }
-				);
-			}
-
-			throw new AuthenticationError('Not logged in');
+		deleteBook: async (parent, { userId, bookId }) => {
+			return await User.findOneAndUpdate(
+				{ _id: userId },
+				{ $pull: { savedBooks: { bookId: bookId } } },
+				{ new: true }
+			);
 		},
 		login: async (parent, { email, username, password }) => {
 			const credentials = username ? ({ username: username }) : ({ email: email });
-			console.log(credentials);
 			const user = await User.findOne(credentials);
 
 			if (!user) {
@@ -60,7 +52,6 @@ const resolvers = {
 			}
 
 			const token = signToken(user);
-
 			return { token, user };
 		}
 	}
