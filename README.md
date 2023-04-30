@@ -60,7 +60,46 @@ THEN I am logged out of the site and presented with a menu with the options Sear
 
 ---
 
+## Usage
 
+The application is hosted on heroku at [https://fierce-cliffs-92471.herokuapp.com/](https://fierce-cliffs-92471.herokuapp.com/)
+
+Once there, the landing page is presented as below;
+
+
+![Landing Page](./images/Landing-Page-1.png)
+
+While not logged in, the visitor can perform a search for their favorite books. 
+
+![Searching for Great Expectations while not logged in](./images/Search-no-log-2.png)
+
+The visitor can follow the links on the page to go to Google for more information but they can't save any book from their search.
+
+![Search results with links but no save option](./images/Search-no-save-3.png)
+
+If the visitor clicks the login/Sign Up navbar link, they get presented with a modal for signing up or logging in
+![Sign Up and Login modal](./images/Modal-Login-4.png)
+
+The sign up tab allows the user to provide their username, email, and password to create an account.
+
+![Creating a new user account](./images/signup-create-user-5.png)
+
+Once the sign up is successful, the user get redirected to the search page with new options to view their saved books.
+
+![User login page](./images/Login-new-user-6.png)
+
+Once logged in, the user can save any favorite book from the search.
+
+![Saving favorite books](./images/save-books-8.png)
+
+The user can view their previously saved books from their search.
+
+![Saved books from previous search](./images/Saved-books-9.png)
+
+
+The user can delete any book or follow a link to purchase the book at Google Books. 
+
+![Options for Saved books](./images/Saved-books-options-10.png)
 
 
 ## Questions
