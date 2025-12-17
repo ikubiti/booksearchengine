@@ -28,8 +28,11 @@ module.exports = {
       return res.status(400).json({ message: 'invalid token!' });
     }
 
+    // If i want context to work in the front-end, then I need to send this to endpoint
+    // return req;
+
     // send to next endpoint
-    next();
+    next(); // this is required if you want to move on to the next middleware function
   },
   signToken: function ({ username, email, _id }) {
     const payload = { username, email, _id };
